@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Count</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="site.js"></script>
+  <style>
+    body {
+      background-color: #9AB2BB;
+    }
+
+
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: SkyBlue;
+      justify-content: center;
+      align-items: center;
+      -webkit-user-select: none;
+      /* Safari */
+      -ms-user-select: none;
+      /* IE 10 and IE 11 */
+      user-select: none;
+      /* Standard syntax */
+      width: 50%;
+      border: double 4px #99e6ff;
+      box-shadow: 3px 3px 8px black;
+      margin-bottom: 75px;
+      margin-top: 25px;
+    }
+
+    .flex-container>div {
+      background-image: url("border.png"), url("CRAM.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      width: 100px;
+      margin: 15px;
+      text-align: center;
+      color: white;
+      line-height: 100px;
+      font-size: 20px;
+      text-shadow: 3px 3px 4px #000000;
+      padding: 10px;
+    }
+
+    .flex-container>div:hover {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("border.png"), url("CRAM.png");
+    }
+
+    #time {
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="qq">
+    <div class="flex-container">
+      <div id="count" onload="" onclick="cout()">1</div>
+      <div onclick="uncout()">-</div>
+      <div onclick="reset()">↺️</div>
+      <div onclick="set()">#</div>
+      <div id="time" onclick="time()">⏱&#xFE0E;</div>
+      <div>6</div>
+      <div>7</div>
+      <div id="make">8</div>
+    </div>
+  </div>
+  <p></p>
+
+
+  <script>
+    var clors = ["a0a0a8", "e8e8f0"]
+    window.onload = function () {
+      document.getElementById("count").innerHTML = localStorage.clickCount;
+    }
+
+    function barr() {
+      document.getElementById("count").innerHTML = "Ooops!";
+    }
+    //document.getElementById("set").onclick = 
+    function set() {
+      var num = prompt("Enter the number to set the counter to:", "0");
+      while (!/^[0-9]+$/.test(num)) {
+        window.alert("Please only submit a number.");
+        var num = prompt("Enter the number to set the counter to:", "0");
+      }
+      localStorage.clickCount = parseInt(num); document.getElementById("count").innerHTML = localStorage.clickCount;
+    }
+
+    function time(){
+      if (!localStorage.lastClick) {
+        localStorage.lastClick = Date.now();
+      } 
+      else {
+        newClick = Date.now();
+        diff = newClick - localStorage.lastClick;
+        document.getElementById("time").innerHTML = diff;
+        localStorage.lastClick = newClick;
+      }
+    }
+
+    function reset() {
+      localStorage.clickCount = 0; document.getElementById("count").innerHTML = localStorage.clickCount;
+    }
+
+    function cout() {
+      time();
+      if (typeof (Storage) !== "undefined") {
+        if (localStorage.clickCount) {
+          localStorage.clickCount = Number(localStorage.clickCount) + 1;
+        } else {
+          localStorage.clickCount = 0;
+        }
+        document.getElementById("count").innerHTML = localStorage.clickCount;
+      } else {
+        document.getElementById("count").innerHTML = "Sorry, your browser does not support web storage...";
+      }
+    }
+
+    function uncout() {
+      localStorage.clickCount = Number(localStorage.clickCount) - 1;
+      document.getElementById("count").innerHTML = localStorage.clickCount;
+    }
+
+    document.getElementById("make").onclick = function make() {
+
+
+      // Get the element
+      var elem = document.querySelector('.flex-container');
+
+      // Create a copy of it
+      var clone = elem.cloneNode(true);
+
+      // Update the ID and add a class
+      clone.id = 'elem2';
+
+      // Inject it into the DOM
+      elem.after(clone);
+    }
+
+    place = document.getElementById("qq");
+    let div = document.createElement("div");
+    div.id = "ba";
+    place.appendChild(div);
+    document.getElementById("ba").style.position = "relative";
+    document.getElementById("ba").style.top = "125px";
+    document.getElementById("elem2").removeAttribute("margin-bottom");
+    document.getElementById("elem2").removeAttribute("margin-top");
+  </script>
+
+</body>
+
+</html>
