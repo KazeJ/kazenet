@@ -38,7 +38,7 @@ const INDEX = '/index.html';
 
 var app = express()
 .use(express.static('public'))
-.listen(PORT, () => console.log(`Listening on ${PORT}`));
+.listen(PORT, () => console.log(`Listening on ${JSON.stringify(app)}`));
 
 const io = socketIO(app);
 
