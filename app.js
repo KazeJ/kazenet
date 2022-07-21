@@ -48,7 +48,11 @@ const server = app.listen(PORT, () => {
   console.log(`${PORT}`)
 });
 
-const io = socketIO(server);
+const io = socketIO(server, {
+  cors: {
+    origin: ["http://secure-shelf-39110.herokuapp.com/", "http://kazej.net/"]
+  }
+});
 
 io.on("connection", socket => { console.log(socket.id) });
 
