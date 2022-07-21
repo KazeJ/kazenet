@@ -35,12 +35,20 @@ const socketIO = require('socket.io');
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
+const cors = require('cors');
 
-var app = express()
-.use(express.static('public'))
-.listen(PORT, () => console.log(`Listening on ${JSON.stringify(app)} \n${PORT}`));
 
-const io = socketIO(app);
+var app = express();
+
+app.use(cors());
+
+app.use(express.static('public'));
+
+const server = app.listen(PORT, () => {
+  console.log(`${PORT}`)
+});
+
+const io = socketIO(server);
 
 io.on("connection", socket => { console.log(socket.id) });
 
