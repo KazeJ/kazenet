@@ -50,7 +50,8 @@ const server = app.listen(PORT, () => {
 
 const io = socketIO(server, {
   cors: {
-    origin: ["http://secure-shelf-39110.herokuapp.com/", "http://kazej.net/c.html"]
+    origin: ["http://secure-shelf-39110.herokuapp.com/", "http://kazej.net/c.html"],
+    methods: ["GET", "POST"],
   }
 });
 
