@@ -36,26 +36,33 @@ const socketIO = require('socket.io');
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
 const cors = require('cors');
+const http = require('http');
 
 
 var app = express();
+const server = http.createServer(app);
 
 app.use(cors());
 
 app.use(express.static('public'));
 
-const server = app.listen(PORT, () => {
+/* const serv = app.listen(PORT, () => {
   console.log(`${PORT}`)
-});
+}); */
 
 const io = socketIO(server, {
   cors: {
     origin: ["http://secure-shelf-39110.herokuapp.com/", "http://kazej.net/c.html"],
     methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
-io.on("connection", socket => { console.log(socket.id) });
+server.listen(PORT, () => {
+  console.log(`Server is runing on port ${PORT}`);
+});
+
+io.on("connection", socket => { console.log(`connected ${socket.id}`) });
 
 /* httpServer.listen(3000);
 
