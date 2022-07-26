@@ -63,7 +63,8 @@ const io = new socketIO.Server(server, {
   cors: {
     origin: ["http://secure-shelf-39110.herokuapp.com/", "http://kazej.net/", "http://localhost:3000/"],
     credentials: true
-  }
+  },
+  transports: ['websocket', 'polling', 'flashsocket'] 
 });
 
 server.listen(PORT, () => {
