@@ -45,21 +45,29 @@ const server = http.createServer(app);
 app.use(cors());
 
 app.use(express.static('public'));
-
+//express.static('public')
 /* const serv = app.listen(PORT, () => {
   console.log(`${PORT}`)
 }); */
 
-const io = socketIO(server, {
+const io = new socketIO.Server(server, {
+  handlePreflightRequest: (req, res) => {
+    const headers = {
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Origin": req.headers.origin,
+    "Access-Control-Allow-Credentials": true
+    };
+    res.writeHead(200, headers);
+    res.end();
+  },
   cors: {
-    origin: ["http://secure-shelf-39110.herokuapp.com/", "http://kazej.net/c.html"],
-    methods: ["GET", "POST"],
+    origin: ["http://secure-shelf-39110.herokuapp.com/", "http://kazej.net/", "http://localhost:3000/"],
     credentials: true
   }
 });
 
 server.listen(PORT, () => {
-  console.log(`Server is runing on port ${PORT}`);
+  console.log(`Server is ruing on port ${PORT}`);
 });
 
 io.on("connection", socket => { console.log(`connected ${socket.id}`) });
