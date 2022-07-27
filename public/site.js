@@ -1,5 +1,6 @@
 const socket = io({
-    withCredentials: true
+    withCredentials: true,
+    transports: ['websocket']
 });
 
 socket.on("connect", () => {
